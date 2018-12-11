@@ -1,2 +1,2 @@
-# trnsl
-Google chrome extension to keep your translations in local storage
+# workTimeCalculator
+Library and tool for work time calculation.
