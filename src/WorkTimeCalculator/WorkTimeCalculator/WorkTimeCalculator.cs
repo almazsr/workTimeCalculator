@@ -2,6 +2,51 @@
 
 namespace WorkTimeCalculator
 {
+	public struct WorkTime
+	{
+		public static implicit operator WorkTime(TimeSpan time)
+		{
+			return new WorkTime
+			{
+				Days = time.Days,
+				Hours = time.Hours,
+				Minutes = time.Minutes
+			};
+		}
+
+		public static WorkTime operator +(WorkTime left, WorkTime right)
+		{
+			var minutes = left.Minutes + right.Minutes;
+			var additionalHours = 0;
+			if (minutes >= 60)
+			{
+				additionalHours = minutes / 60;
+				minutes = minutes % 60;
+			}
+
+			var hours = additionalHours + left.Hours + right.Hours;
+			var additionalDays = 0;
+			if(hours >= left.WorkDayLength)
+			{
+				additionalDays = minutes / left.WorkDayLength;
+				hours = hours % left.WorkDayLength;
+			}
+
+			var days = additionalDays + left.Days + right.Days;
+
+		}
+
+		public static WorkTime operator +(TimeSpan time, WorkTime workTime)
+		{
+			return new WorkTime { Days = }
+		}
+
+		public int Days { get; set; }
+		public int Hours { get; set; }
+		public int Minutes { get; set; }
+		public int WorkDayLength { get; set; }
+	}
+
 	public class WorkTimeCalculator : ITimeCalculator
 	{
 		private readonly IWorkDayCalendar _workDayCalendar;
@@ -43,7 +88,7 @@ namespace WorkTimeCalculator
 			return date;
 		}
 
-		public DateTime Add(DateTime left, TimeSpan right)
+		public DateTime Add(DateTime left, WorkTime right)
 		{
 			var startDate = GetStartDate(left);
 			var date = startDate;
