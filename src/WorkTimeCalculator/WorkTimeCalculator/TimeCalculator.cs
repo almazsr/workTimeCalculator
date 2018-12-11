@@ -11,7 +11,7 @@ namespace WorkTimeCalculator
 
 		public DateTime Add(TimeSpan left, DateTime right) => Add(right, left);
 
-		public TimeSpan Distance(DateTime left, DateTime right)
+		public TimeSpan Subtract(DateTime left, DateTime right)
 		{
 			return left - right;
 		}

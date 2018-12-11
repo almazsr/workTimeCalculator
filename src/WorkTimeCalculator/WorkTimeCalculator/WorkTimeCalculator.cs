@@ -43,11 +43,6 @@ namespace WorkTimeCalculator
 			return date;
 		}
 
-		private DateTime GetWorkDayEndDate(DateTime date) => date.Date.Add(WorkDayEnd);
-		private DateTime GetWorkDayStartDate(DateTime date) => date.Date.Add(WorkDayStart);
-		private DateTime GetPreviousWorkDayEndDate(DateTime date) => GetWorkDayEndDate(date.AddDays(-1));
-		private DateTime GetNextWorkDayStartDate(DateTime date) => GetWorkDayStartDate(date.AddDays(1));
-
 		public DateTime Add(DateTime left, TimeSpan right)
 		{
 			var startDate = GetStartDate(left);
@@ -70,7 +65,7 @@ namespace WorkTimeCalculator
 
 		public DateTime Add(TimeSpan left, DateTime right) => Add(right, left);
 
-		public TimeSpan Distance(DateTime left, DateTime right)
+		public TimeSpan Subtract(DateTime left, DateTime right)
 		{
 			var endDate = GetEndDate(left);
 			var date = endDate;
@@ -112,6 +107,11 @@ namespace WorkTimeCalculator
 			date -= right - subtractedTime;
 
 			return date;
-		}
-	}
+	    }
+
+	    private DateTime GetWorkDayEndDate(DateTime date) => date.Date.Add(WorkDayEnd);
+	    private DateTime GetWorkDayStartDate(DateTime date) => date.Date.Add(WorkDayStart);
+	    private DateTime GetPreviousWorkDayEndDate(DateTime date) => GetWorkDayEndDate(date.AddDays(-1));
+	    private DateTime GetNextWorkDayStartDate(DateTime date) => GetWorkDayStartDate(date.AddDays(1));
+    }
 }

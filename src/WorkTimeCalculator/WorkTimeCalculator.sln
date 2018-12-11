@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkTimeCalculator", "WorkTimeCalculator\WorkTimeCalculator.csproj", "{1C3AB711-1E96-45BA-BD54-661DE483821E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkTimeCalculator", "WorkTimeCalculator\WorkTimeCalculator.csproj", "{1C3AB711-1E96-45BA-BD54-661DE483821E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkTimeCalculator.App", "WorkTimeCalculator.App\WorkTimeCalculator.App.csproj", "{04632CB6-FA77-410E-A848-F0BF40AA1457}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkTimeCalculator.IO", "WorkTimeCalculator.IO\WorkTimeCalculator.IO.csproj", "{AFF10CE7-B78E-4090-98D2-0A990B196519}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkTimeCalculator.Tests", "WorkTimeCalculator.Tests\WorkTimeCalculator.Tests.csproj", "{C59FBB27-46E3-4938-8661-789AFF47ED53}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{04632CB6-FA77-410E-A848-F0BF40AA1457}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04632CB6-FA77-410E-A848-F0BF40AA1457}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04632CB6-FA77-410E-A848-F0BF40AA1457}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFF10CE7-B78E-4090-98D2-0A990B196519}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFF10CE7-B78E-4090-98D2-0A990B196519}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFF10CE7-B78E-4090-98D2-0A990B196519}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFF10CE7-B78E-4090-98D2-0A990B196519}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C59FBB27-46E3-4938-8661-789AFF47ED53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C59FBB27-46E3-4938-8661-789AFF47ED53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C59FBB27-46E3-4938-8661-789AFF47ED53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C59FBB27-46E3-4938-8661-789AFF47ED53}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

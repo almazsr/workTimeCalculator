@@ -1,4 +1,4 @@
-﻿namespace WorkTimeCalculator
+﻿namespace WorkTimeCalculator.IO
 {
 	public class TimeExpression
 	{
