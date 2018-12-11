@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2042
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkTimeCalculator", "WorkTimeCalculator\WorkTimeCalculator.csproj", "{1C3AB711-1E96-45BA-BD54-661DE483821E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkTimeCalculator.App", "WorkTimeCalculator.App\WorkTimeCalculator.App.csproj", "{04632CB6-FA77-410E-A848-F0BF40AA1457}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1C3AB711-1E96-45BA-BD54-661DE483821E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C3AB711-1E96-45BA-BD54-661DE483821E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C3AB711-1E96-45BA-BD54-661DE483821E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C3AB711-1E96-45BA-BD54-661DE483821E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04632CB6-FA77-410E-A848-F0BF40AA1457}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04632CB6-FA77-410E-A848-F0BF40AA1457}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04632CB6-FA77-410E-A848-F0BF40AA1457}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04632CB6-FA77-410E-A848-F0BF40AA1457}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C1955FC8-F105-4690-8162-469B95530D14}
+	EndGlobalSection
+EndGlobal
