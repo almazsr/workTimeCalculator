@@ -36,17 +36,18 @@ namespace WorkTimeCalculator.Tests
         public void Add_4900And10122018_Returns121120180100()
         {
             var timeCalculator = new WorkTimeCalculator(new SimpleWorkDayCalendar(), TimeSpan.FromHours(10), TimeSpan.FromHours(18));
-            var expected = new DateTime(2018, 12, 12, 1, 0, 0);
-            var actual = timeCalculator.Add(new WorkTime(8, 0, 49, 0), new DateTime(2018, 12, 10));
+	        var expected = new DateTime(2018, 12, 18, 11, 0, 0);
+			var actual = timeCalculator.Add(new WorkTime(8, 0, 49, 0), new DateTime(2018, 12, 10));
             Assert.Equal(expected, actual);
         }
 
         [Fact]
         public void Add_2359And10122018_Returns101220182359()
         {
-            var timeCalculator = new TimeCalculator();
-            var expected = new DateTime(2018, 10, 12, 23, 59, 0);
-            var actual = timeCalculator.Add(new TimeSpan(23, 59, 0), new DateTime(2018, 10, 12));
+	        var timeCalculator = new WorkTimeCalculator(new SimpleWorkDayCalendar(), TimeSpan.FromHours(10),
+		        TimeSpan.FromHours(18));
+            var expected = new DateTime(2018, 12, 12, 17, 59, 0);
+            var actual = timeCalculator.Add(new WorkTime(8, 0, 23, 59), new DateTime(2018, 12, 10));
             Assert.Equal(expected, actual);
         }
 
