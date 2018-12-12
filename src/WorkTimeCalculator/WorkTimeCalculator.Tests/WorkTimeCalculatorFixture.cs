@@ -10,7 +10,7 @@ namespace WorkTimeCalculator.Tests
         {
             var timeCalculator = new WorkTimeCalculator(new SimpleWorkDayCalendar(), TimeSpan.FromHours(10), TimeSpan.FromHours(18));
             var expected = new DateTime(2018, 12, 18, 11, 0, 0);
-            var actual = timeCalculator.Add(new DateTime(2018, 12, 10), new TimeSpan(49, 0, 0));
+            var actual = timeCalculator.Add(new DateTime(2018, 12, 10), new WorkTime(8, 0, 49, 0));
             Assert.Equal(expected, actual);
         }
 
@@ -18,8 +18,8 @@ namespace WorkTimeCalculator.Tests
         public void Add_10122018And2359_Returns101220182359()
         {
             var timeCalculator = new WorkTimeCalculator(new SimpleWorkDayCalendar(), TimeSpan.FromHours(10), TimeSpan.FromHours(18));
-            var expected = new DateTime(2018, 12, 18, 11, 0, 0);
-            var actual = timeCalculator.Add(new DateTime(2018, 10, 12), new TimeSpan(23, 59, 0));
+            var expected = new DateTime(2018, 12, 12, 17, 59, 0);
+            var actual = timeCalculator.Add(new DateTime(2018, 12, 10), new WorkTime(8, 0, 23, 59));
             Assert.Equal(expected, actual);
         }
 
@@ -27,8 +27,8 @@ namespace WorkTimeCalculator.Tests
         public void Add_101220181400And201600_Returns311220180600()
         {
             var timeCalculator = new WorkTimeCalculator(new SimpleWorkDayCalendar(), TimeSpan.FromHours(10), TimeSpan.FromHours(18));
-            var expected = new DateTime(2018, 12, 31, 6, 0, 0);
-            var actual = timeCalculator.Add(new DateTime(2018, 12, 10, 14, 0, 0), new TimeSpan(20, 16, 0, 0));
+            var expected = new DateTime(2019, 01, 9, 15, 0, 0);
+            var actual = timeCalculator.Add(new DateTime(2018, 12, 10, 15, 0, 0), new WorkTime(8, 20, 16, 0));
             Assert.Equal(expected, actual);
         }
 
@@ -37,7 +37,7 @@ namespace WorkTimeCalculator.Tests
         {
             var timeCalculator = new WorkTimeCalculator(new SimpleWorkDayCalendar(), TimeSpan.FromHours(10), TimeSpan.FromHours(18));
             var expected = new DateTime(2018, 12, 12, 1, 0, 0);
-            var actual = timeCalculator.Add(new TimeSpan(49, 0, 0), new DateTime(2018, 12, 10));
+            var actual = timeCalculator.Add(new WorkTime(8, 0, 49, 0), new DateTime(2018, 12, 10));
             Assert.Equal(expected, actual);
         }
 
@@ -55,7 +55,7 @@ namespace WorkTimeCalculator.Tests
         {
             var timeCalculator = new WorkTimeCalculator(new SimpleWorkDayCalendar(), TimeSpan.FromHours(10), TimeSpan.FromHours(18));
             var expected = new DateTime(2018, 12, 31, 6, 0, 0);
-            var actual = timeCalculator.Add(new TimeSpan(20, 16, 0, 0), new DateTime(2018, 12, 10, 14, 0, 0));
+            var actual = timeCalculator.Add(new WorkTime(8, 20, 16, 0), new DateTime(2018, 12, 10, 14, 0, 0));
             Assert.Equal(expected, actual);
         }
 
@@ -64,7 +64,7 @@ namespace WorkTimeCalculator.Tests
         {
             var timeCalculator = new WorkTimeCalculator(new SimpleWorkDayCalendar(), TimeSpan.FromHours(10), TimeSpan.FromHours(18));
             var expected = new DateTime(2018, 12, 10);
-            var actual = timeCalculator.Subtract(new DateTime(2018, 12, 12, 1, 0, 0), new TimeSpan(49, 0, 0));
+            var actual = timeCalculator.Subtract(new DateTime(2018, 12, 12, 1, 0, 0), new WorkTime(8, 0, 49, 0));
             Assert.Equal(expected, actual);
         }
 
@@ -73,7 +73,7 @@ namespace WorkTimeCalculator.Tests
         {
             var timeCalculator = new WorkTimeCalculator(new SimpleWorkDayCalendar(), TimeSpan.FromHours(10), TimeSpan.FromHours(18));
             var expected = new DateTime(2018, 10, 12);
-            var actual = timeCalculator.Subtract(new DateTime(2018, 10, 12, 23, 59, 0), new TimeSpan(23, 59, 0));
+            var actual = timeCalculator.Subtract(new DateTime(2018, 10, 12, 23, 59, 0), new WorkTime(8, 23, 59, 0));
             Assert.Equal(expected, actual);
         }
 
@@ -82,7 +82,7 @@ namespace WorkTimeCalculator.Tests
         {
             var timeCalculator = new WorkTimeCalculator(new SimpleWorkDayCalendar(), TimeSpan.FromHours(10), TimeSpan.FromHours(18));
             var expected = new DateTime(2018, 12, 10, 14, 0, 0);
-            var actual = timeCalculator.Subtract(new DateTime(2018, 12, 31, 6, 0, 0), new TimeSpan(20, 16, 0, 0));
+            var actual = timeCalculator.Subtract(new DateTime(2018, 12, 31, 6, 0, 0), new WorkTime(8, 20, 16, 0));
             Assert.Equal(expected, actual);
         }
 
