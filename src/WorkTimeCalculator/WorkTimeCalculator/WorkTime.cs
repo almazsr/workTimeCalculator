@@ -5,10 +5,20 @@ namespace WorkTimeCalculator
 	public struct WorkTime
 	{
 		public const int MinutesInHour = 60;
+	    public const int HoursInDay = 24;
+
+        public WorkTime(TimeSpan time) : this(time.Hours, time)
+	    {          
+	    }
 
 		public WorkTime(int workDayLength, int days, int hours, int minutes)
 		{
-			WorkDayLength = workDayLength;
+		    if (workDayLength >= HoursInDay)
+		    {
+		        throw new InvalidOperationException();
+		    }
+
+            WorkDayLength = workDayLength;
 
 			var totalMinutes = minutes;
 			int additionalHours = 0;

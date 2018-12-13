@@ -6,37 +6,18 @@ namespace WorkTimeCalculator
 	{
 		private readonly IWorkDayCalendar _workDayCalendar;
 
-		public WorkTimeCalculator(IWorkDayCalendar workDayCalendar, TimeSpan workDayStart, TimeSpan workDayEnd)
+		public WorkTimeCalculator(IWorkDayCalendar workDayCalendar)
 		{
 			_workDayCalendar = workDayCalendar;
-			WorkDayStart = workDayStart;
-			WorkDayEnd = workDayEnd;
 		}
 
-		public TimeSpan WorkDayStart { get; }
-		public TimeSpan WorkDayEnd { get; }
-		public TimeSpan WorkDayLength => WorkDayEnd - WorkDayStart;
-
-		private DateTime GetStartDate(DateTime date)
+		private DateTime GetWorkDate(DateTime date)
 		{
-			if (date.TimeOfDay < WorkDayStart)
+			if(date.TimeOfDay < _workDayCalendar.GetWorkDay(date).Start)
 			{
 				return GetWorkDayStartDate(date);
 			}
-			if (date.TimeOfDay >= WorkDayEnd)
-			{
-				return GetNextWorkDayStartDate(date);
-			}
-			return date;
-		}
-
-		private DateTime GetEndDate(DateTime date)
-		{
-			if(date.TimeOfDay < WorkDayStart)
-			{
-				return GetPreviousWorkDayEndDate(date);
-			}
-			if(date.TimeOfDay >= WorkDayEnd)
+			if(date.TimeOfDay >= _workDayCalendar.GetWorkDay(date).End)
 			{
 				return GetWorkDayEndDate(date);
 			}
@@ -55,8 +36,8 @@ namespace WorkTimeCalculator
 			}
 			while (addedTime.TotalMinutes() >= WorkDayLength.TotalMinutes)
 			{
-				var workTime = new WorkTime(WorkDayLength, _workDayCalendar.GetWorkDayLength(date));
-				_workDayCalendar.GetWorkDayLength(date);
+				var workTime = new WorkTime(WorkDayLength, _workDayCalendar.GetWorkDay(date));
+				_workDayCalendar.GetWorkDay(date);
 				addedTime -= workTime;
 				date = GetNextWorkDayStartDate(date);
 			}
@@ -66,6 +47,23 @@ namespace WorkTimeCalculator
 
 		public DateTime Add(WorkTime left, DateTime right) => Add(right, left);
 
+	    private WorkTime IntersectWithWorkDay(DateTime date)
+	    {
+	        var workDay = _workDayCalendar.GetWorkDay(date);
+
+            if (date.TimeOfDay < WorkDayStart)
+	        {
+	            return WorkTime.Zero(WorkDayLength);
+	        }
+
+            if (date.TimeOfDay > WorkDayEnd)
+	        {
+                return new WorkTime(WorkDayLength, WorkDayLength);
+	        }
+
+	        return workTime.Length - new WorkTime(WorkDayLength, date - GetWorkDayStartDate(date));
+	    }
+
         public WorkTime Subtract(DateTime left, DateTime right)
 		{
 		    if (Math.Abs((right-left).TotalHours) < 24 && 
@@ -74,23 +72,26 @@ namespace WorkTimeCalculator
                 return WorkTime.Zero(WorkDayLength);
             }
 
-		    var endDate = GetEndDate(left);
-			var date = endDate;
-
-		    var subtractedTime = WorkTime.Zero(WorkDayLength);
-
 		    if (left == date)
 			{
 				subtractedTime += new WorkTime(WorkDayLength, date - GetWorkDayStartDate(date));
 				date = GetPreviousWorkDayEndDate(date);
-			}
+		    }
+            
+		    var additionalTime = IntersectWithWorkDay(left);
 
-			while(date - WorkDayLength >= right)
-			{
-				var workTime = _workDayCalendar.GetWorkDayLength(date);
+		    var date = GetNextWorkDayStartDate(left);
+            var subtractedTime = WorkTime.Zero(WorkDayLength);
+		    var previousEndDate = GetPreviousWorkDayEndDate(date);
+
+            while (date - WorkDayLength >= right)
+            {
+                date = previousEndDate;
+                var workTime = _workDayCalendar.GetWorkDay(date);                
 				subtractedTime += new WorkTime(WorkDayLength, workTime);
 				date = GetPreviousWorkDayEndDate(date);
-		    }
+                previousEndDate = GetPreviousWorkDayEndDate(date);
+            }
 
             subtractedTime += new WorkTime(WorkDayLength, Subtract(date, right));
 
@@ -99,7 +100,7 @@ namespace WorkTimeCalculator
 
 		public DateTime Subtract(DateTime left, WorkTime right)
 		{
-			var endDate = GetEndDate(left);
+			var endDate = GetWorkDate(left);
 			var date = endDate;
 			var subtractedTime = WorkTime.Zero(WorkDayLength);
             if (left == date)
@@ -109,7 +110,7 @@ namespace WorkTimeCalculator
 			}
 			while(subtractedTime + WorkDayLength <= right)
 			{
-				var workTime = _workDayCalendar.GetWorkDayLength(date);
+				var workTime = _workDayCalendar.GetWorkDay(date);
 				subtractedTime += new WorkTime(WorkDayLength, workTime);
 				date = GetPreviousWorkDayEndDate(date);
 		    }
