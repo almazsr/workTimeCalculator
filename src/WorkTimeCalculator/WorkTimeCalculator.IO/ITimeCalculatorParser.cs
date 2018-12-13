@@ -2,6 +2,6 @@
 {
     public interface ITimeCalculatorParser
     {
-        ITimeCalculator Parse(string input);
+        object Parse(string input);
     }
 }

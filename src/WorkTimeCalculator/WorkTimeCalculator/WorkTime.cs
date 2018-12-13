@@ -54,7 +54,10 @@ namespace WorkTimeCalculator
 
 		}
 
-		public static implicit operator TimeSpan(WorkTime time)
+	    public static WorkTime Zero(int workDayLength) => new WorkTime(workDayLength, 0, 0, 0);
+	    public static WorkTime Zero(TimeSpan workDayLength) => new WorkTime(workDayLength, 0, 0, 0);
+
+        public static implicit operator TimeSpan(WorkTime time)
 		{
 			return new TimeSpan(time.Days, time.Hours, time.Minutes, 0);
 		}

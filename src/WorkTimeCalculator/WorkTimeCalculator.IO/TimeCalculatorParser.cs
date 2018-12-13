@@ -15,7 +15,7 @@ namespace WorkTimeCalculator.IO
             _workDayCalendar = workDayCalendar;
         }
 
-        public ITimeCalculator Parse(string input)
+        public object Parse(string input)
         {
             var calculatorMatch = _calculatorRegex.Match(input);
             if (!calculatorMatch.Success)
