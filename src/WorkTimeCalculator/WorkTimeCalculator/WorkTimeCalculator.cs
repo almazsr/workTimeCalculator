@@ -2,6 +2,27 @@
 
 namespace WorkTimeCalculator
 {
+	public struct TimePeriod
+	{
+		public DateTime Start;
+		public DateTime End;
+
+		public DateTime Min(DateTime left, DateTime right)
+		{
+			return left.Ticks > right.Ticks ? right : left;
+		}
+
+		public DateTime Max(DateTime left, DateTime right)
+		{
+			return left.Ticks < right.Ticks ? right : left;
+		}
+
+		public TimePeriod Intersection(TimePeriod left, TimePeriod right)
+		{
+			return new TimePeriod {Start = Max(left.Start, right.Start), End = Min(left.End, right.End)};
+		}
+	}
+
 	public class WorkTimeCalculator : IWorkTimeCalculator
 	{
 		private readonly IWorkDayCalendar _workDayCalendar;
