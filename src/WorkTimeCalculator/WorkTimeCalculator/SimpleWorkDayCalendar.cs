@@ -4,13 +4,14 @@ namespace WorkTimeCalculator
 {
 	public class SimpleWorkDayCalendar : IWorkDayCalendar
 	{
-		public TimeSpan StandardWorkDay => TimeSpan.FromHours(8);
-
-		public TimeSpan GetWorkDayLength(DateTime date)
+		public TimePeriod GetWorkDay(DateTime date)
 		{
-			return date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday
-				? TimeSpan.Zero
-				: StandardWorkDay;
+			if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+			{
+				return new TimePeriod {Start = date, End = date};
+			}
+
+			return new TimePeriod {Start = date.Date.AddHours(10), End = date.Date.AddHours(18) };
 		}
 	}
 }
