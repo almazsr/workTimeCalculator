@@ -10,10 +10,10 @@ namespace WorkTimeCalculator.IO
 
 		public TimeArgumentParser()
 		{
-			_workTimeRegexes = new []
+			_workTimeRegexes = new[]
 			{
 				new Regex(@"(?<days>\d+ |)(?<hours>\d+):(?<minutes>[0-5][0-9])", RegexOptions.Compiled),
-				new Regex(@"(?<days>\d+d |)(?<hours>\d+h |)(?<minutes>[0-5][0-9]m|)", RegexOptions.Compiled)
+				new Regex(@"(?<days>\d+|)[d ]*(?<hours>\d+|)[h ]*(?<minutes>[0-5][0-9]|)m*", RegexOptions.Compiled)
 			};
 		}
 
@@ -51,9 +51,11 @@ namespace WorkTimeCalculator.IO
 				var daysParsed = int.TryParse(match.Groups["days"].Value.Trim(), out int days);
 				var hoursParsed = int.TryParse(match.Groups["hours"].Value.Trim(), out int hours);
 				var minutesParsed = int.TryParse(match.Groups["minutes"].Value.Trim(), out int minutes);
-				if (!daysParsed && !hoursParsed && !minutesParsed) throw new InvalidOperationException();
-				time = new WorkTime(days, hours, minutes);
-				return true;
+				if(daysParsed || hoursParsed || minutesParsed)
+				{
+					time = new WorkTime(days, hours, minutes);
+					return true;
+				}
 			}
 
 			time = default(WorkTime);
@@ -62,9 +64,9 @@ namespace WorkTimeCalculator.IO
 
 		private bool TryParseWorkTime(string input, out WorkTime time)
 		{
-			foreach (var regex in _workTimeRegexes)
+			foreach(var regex in _workTimeRegexes)
 			{
-				if (TryParseWorkTime(input, regex, out time))
+				if(TryParseWorkTime(input, regex, out time))
 				{
 					return true;
 				}

@@ -10,7 +10,9 @@ namespace WorkTimeCalculator.App
 			try
 			{
 				var cmd = string.Join(" ", args);
-				var calculatorParser = new TimeCalculatorParser(new SimpleWorkDayCalendar());
+				var workDayCalendar = new TatarstanWorkDayCalendar(TimeSpan.FromHours(10), TimeSpan.FromHours(18));
+				workDayCalendar.EnsureInitializedAsync().Wait();
+				var calculatorParser = new TimeCalculatorParser(workDayCalendar);
 				var calculator = calculatorParser.Parse(cmd);
 				var timeExpressionParser = new TimeExpressionParser(new TimeArgumentParser());
 				var timeExpr = timeExpressionParser.Parse(cmd);
