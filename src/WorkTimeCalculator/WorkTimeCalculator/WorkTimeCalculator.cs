@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace WorkTimeCalculator
 {
@@ -47,6 +48,32 @@ namespace WorkTimeCalculator
 		}
 
 		public DateTime Add(WorkTime left, DateTime right) => Add(right, left);
+
+		public IEnumerable<TimePeriod> GetSchedule(DateTime left, WorkTime right)
+		{
+			if(right.TotalMinutes < 0)
+			{
+				throw new ArgumentException("Right should be positive", nameof(right));
+			}
+
+			var date = left;
+			var nextDate = date;
+			var minutes = right.TotalMinutes;
+			while(minutes > 0)
+			{
+				date = nextDate;
+				var workDay = _workDayCalendar.GetWorkDay(date);
+				var startDate = Min(Max(workDay.Start, date), workDay.End);
+				date = Min(workDay.End, startDate.AddMinutes(Math.Min(workDay.Length.TotalMinutes, minutes)));
+				var period = new TimePeriod {Start = startDate, End = date};
+				minutes -= (int)(date - startDate).TotalMinutes;
+				if(date == workDay.End)
+				{
+					nextDate = date.Date.AddDays(1);
+				}
+				yield return period;
+			}
+		}
 
 		public WorkTime Subtract(DateTime left, DateTime right)
 		{
