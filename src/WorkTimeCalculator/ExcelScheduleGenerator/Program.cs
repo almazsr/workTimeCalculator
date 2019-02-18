@@ -8,6 +8,8 @@ using Microsoft.Office.Interop.Excel;
 
 namespace ExcelScheduleGenerator
 {
+	using WorkTimeCalculator;
+
 	class Program
 	{
 		static void Main(string[] args)
@@ -20,8 +22,15 @@ namespace ExcelScheduleGenerator
 			try
 			{
 				scheduleWorkbook = application.Workbooks.Add();
+				var tat = new TatarstanWorkDayCalendar(TimeSpan.FromHours(10),
+					TimeSpan.FromHours(18));
+				tat.EnsureInitializedAsync().Wait();
+				var workTimeCalculator =
+					new WorkTimeCalculator(tat);
 				Worksheet scheduleSheet = scheduleWorkbook.ActiveSheet;
 				PrintDateRow(scheduleSheet, startDate, endDate);
+				var schedule = workTimeCalculator.GetSchedule(startDate, new WorkTime(20, 0, 0));
+				PrintSchedule(scheduleSheet, 2, schedule);
 				scheduleWorkbook.SaveAs(@"\C:\Users\almaz\OneDrive\Документы\test.xlsx");
 			}
 			catch (Exception e)
@@ -46,6 +55,20 @@ namespace ExcelScheduleGenerator
 				cell.Value = date.ToShortDateString();
 				index++;
 				date = date.AddDays(1);
+			}
+		}
+
+		static void PrintSchedule(Worksheet sheet, int row, IEnumerable<TimePeriod> schedule)
+		{
+			var index = 1;
+			foreach (var timePeriod in schedule)
+			{
+				Range cell = sheet.Cells[row, index];
+				if (timePeriod.Length > TimeSpan.Zero)
+				{
+					cell.Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Green);
+				}
+				index++;
 			}
 		}
 	}
